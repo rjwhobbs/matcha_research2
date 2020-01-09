@@ -1,4 +1,4 @@
-const passport = require('passport');
+whivconst passport = require('passport');
 const localStrategy = require('passport-local').Strategy;
 const users = require('./data/users');
 const _ = require('lodash');

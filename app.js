@@ -6,7 +6,7 @@ const passport = require('passport');
 
 app.use(flash());
 
-require('./authentication/passport_init');
+require('./auth/passport_init');
 
 app.set('views', './views');
 app.set('view engine', 'pug');
@@ -24,7 +24,7 @@ app.use(require('express-session')({
 app.use(passport.initialize());
 app.use(passport.session());
 
-let authRouter = require('./authentication/auth');
+let authRouter = require('./auth/auth');
 app.use(authRouter);
 
 app.use(function(req, res, next) {
