@@ -8,7 +8,7 @@ let	sql				= require('../sql/statements');
 passport.use(new localStrategy(function(username, password, done) {
 	conn.query(sql.selUser, [username], (err, results) => {
 		if (err) {throw err}
-		user = results[0];
+		let user = results[0];
 		bcrypt.compare(password, user.password, (err, res) => {
 			if (err) {throw err}
 			if (res) {
