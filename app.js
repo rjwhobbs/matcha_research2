@@ -25,6 +25,9 @@ app.use(passport.initialize());
 // Injects passports session middleware, this leverages the express middleware
 app.use(passport.session());
 
+let signupRouter = require('./signup');
+app.use('/signup', signupRouter);
+
 let authRouter = require('./auth/auth');
 app.use(authRouter);
 
