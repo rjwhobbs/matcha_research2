@@ -1,7 +1,7 @@
-const express = require('express');
-const passport = require('passport');
-const _ = require('lodash'); // Utility library
-let users = require('../dummy_data/users.json');
+const express 	= require('express');
+const passport 	= require('passport');
+const _ 		= require('lodash'); // Utility library
+let users 		= require('../dummy_data/users.json');
 
 const router = express.Router();
 module.exports = router;
