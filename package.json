@@ -4,7 +4,8 @@
   "description": "Practice",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "NODE_ENV=developement nodemon app.js",
+	"pro": "nodemon app.js"
   },
   "repository": {
     "type": "git",

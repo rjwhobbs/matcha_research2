@@ -36,3 +36,12 @@ app.use(function(req, res, next) {
 	}
 	res.redirect('/login');
 });
+
+app.get('/', function(req, res) {
+	// throw new Error("OH NOSSS");
+	res.render('dashboard', {title: 'dashboard'});
+});
+
+app.listen(3000, function() {
+	console.log('Chat app listening on port 3000');
+});

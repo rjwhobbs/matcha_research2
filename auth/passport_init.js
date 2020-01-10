@@ -1,6 +1,6 @@
 const passport = require('passport');
 const localStrategy = require('passport-local').Strategy;
-const users = require('./data/users');
+let users = require('../dummy_data/users.json');
 const _ = require('lodash');
 
 passport.use(new localStrategy(function(username, password, done) {

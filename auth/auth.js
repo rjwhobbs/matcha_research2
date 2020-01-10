@@ -1,13 +1,14 @@
 const express = require('express');
 const passport = require('passport');
 const _ = require('lodash'); // Utility library
+let users = require('../dummy_data/users.json');
 
 const router = express.Router();
 module.exports = router;
 
 router.get('/login', function(req, res) {
 	// The code in this if block is used for automatic signin in dev mode
-	// choose npm run dev or npm run pro. See package.json for details
+	// choose npm run dev or npm run pro. See package.json script for details
 	if (req.app.get('env') === 'developement') {
 		let user = users[0];
 		if (req.query.user) {
@@ -19,7 +20,7 @@ router.get('/login', function(req, res) {
 		});
 		return ;
 	}
-	// Erro is the key for the value of failureFlash from the post below
+	// 'error' is the key for the value of failureFlash from the post below
 	let message = req.flash('error');
 	res.render('login', {message: message[0]});
 });
