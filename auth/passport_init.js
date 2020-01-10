@@ -6,7 +6,7 @@ const bcrypt		= require('bcrypt');
 let	sql				= require('../sql/statements');	
 
 passport.use(new localStrategy(function(username, password, done) {
-	conn.query(sql.selUser, [username], (err, results, feilds) => {
+	conn.query(sql.selUser, [username], (err, results) => {
 		if (err) {throw err}
 		let user = results[0];
 		bcrypt.compare(password, user.password, (err, res) => {
@@ -21,10 +21,14 @@ passport.use(new localStrategy(function(username, password, done) {
 }));
 
 passport.serializeUser(function(user, done) {
+	console.log("here");
 	done(null, user.user_id);
 });
 // Adds the user id to the session var
+// And if I understand it correctly it also adds this user to the request object
+// as follows: req.user
 passport.deserializeUser(function(user_id, done) {
+	console.log("and here");
 	conn.query(sql.selUserById, [user_id], (err, results) => {
 		if (err) {throw err}
 		let user = results[0];

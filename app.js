@@ -38,7 +38,7 @@ app.use(function(req, res, next) {
 });
 
 app.get('/', function(req, res) {
-	// throw new Error("OH NOSSS");
+	console.log(req.user);
 	res.render('dashboard', {title: 'dashboard'});
 });
 
