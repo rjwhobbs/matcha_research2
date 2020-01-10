@@ -1,4 +1,4 @@
-whivconst passport = require('passport');
+const passport = require('passport');
 const localStrategy = require('passport-local').Strategy;
 const users = require('./data/users');
 const _ = require('lodash');
@@ -15,7 +15,7 @@ passport.use(new localStrategy(function(username, password, done) {
 passport.serializeUser(function(user, done) {
 	done(null, user.id);
 });
-
+// Adds the user id to the session var
 passport.deserializeUser(function(id, done) {
 	let user = _.find(users, u => u.id === id);
 	done(null, user);

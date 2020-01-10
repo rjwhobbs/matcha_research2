@@ -20,8 +20,9 @@ app.use(require('express-session')({
 	resave: false,
 	saveUninitialized: false
 }));
-
+// Calls the passport initialization
 app.use(passport.initialize());
+// Injects passports session middleware, this leverages the express middleware
 app.use(passport.session());
 
 let authRouter = require('./auth/auth');
