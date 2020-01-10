@@ -38,7 +38,6 @@ app.use(function(req, res, next) {
 });
 
 app.get('/', function(req, res) {
-	console.log(req.user);
 	res.render('dashboard', {title: 'dashboard'});
 });
 
