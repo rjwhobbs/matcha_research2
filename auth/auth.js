@@ -1,12 +1,13 @@
 const express = require('express');
 const passport = require('passport');
-const users = require('./data/users');
-const _ = require('lodash');
+const _ = require('lodash'); // Utility library
 
 const router = express.Router();
 module.exports = router;
 
 router.get('/login', function(req, res) {
+	// The code in this if block is used for automatic signin in dev mode
+	// choose npm run dev or npm run pro. See package.json for details
 	if (req.app.get('env') === 'developement') {
 		let user = users[0];
 		if (req.query.user) {
@@ -18,6 +19,7 @@ router.get('/login', function(req, res) {
 		});
 		return ;
 	}
+	// Erro is the key for the value of failureFlash from the post below
 	let message = req.flash('error');
 	res.render('login', {message: message[0]});
 });
@@ -29,6 +31,7 @@ router.post('/login', passport.authenticate('local', {
 }));
 
 router.get('/logout', function(req, res) {
+	// I think passport middleware adds this logout function which clears the sess
 	req.logout(); 
 	res.redirect('/login');
 });
