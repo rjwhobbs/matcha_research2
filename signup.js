@@ -4,6 +4,7 @@ const express 	= require('express');
 const conn		= require('./connection/conn');
 const sql		= require('./sql/statements');
 const bcrypt 	= require('bcrypt');
+let	valid		= require('./helpers/signup_helpers');
 
 let router = express.Router();
 module.exports = router;
@@ -19,7 +20,7 @@ router.use((req, res, next) => {
 });
 
 router.get('/', (req, res) => {
-	// See comments in checkNameExits() on how flash() works
+	// See comments in checkNameExits() bellow on how flash() works
 	let message = req.flash('message');
 	res.render('signup', {message: message});
 });
@@ -33,6 +34,15 @@ router.post('/', (req, res) => {
 	function checkNameExits(err, result) {
 		if (err) {throw err}
 		if (!result.length) {
+			if (!valid.uNameCheck(username)) {
+				req.flash(
+					'message',
+					'Username can only be English letters (with or without digits) ' +
+					'and not less than three letters long.'
+				);
+				res.redirect('/signup');
+				return;
+			}
 			bcrypt.hash(password, 10, hashPasswd);
 		} else {
 			// req.flash creates the key value pair bellow
@@ -43,7 +53,7 @@ router.post('/', (req, res) => {
 			req.flash('message', 'Sorry, this name is already taken.');
 			res.redirect('/signup');	
 		}
-	} 
+	}
 	function hashPasswd(err, hash) {
 		if (err) {throw err}
 		conn.query(sql.insUser, [username, hash] ,insertNewUser);
