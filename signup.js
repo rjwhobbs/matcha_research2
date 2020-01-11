@@ -19,6 +19,7 @@ router.use((req, res, next) => {
 });
 
 router.get('/', (req, res) => {
+	// See comments in checkNameExits() on how flash() works
 	let message = req.flash('message');
 	res.render('signup', {message: message});
 });
@@ -37,7 +38,7 @@ router.post('/', (req, res) => {
 			// req.flash creates the key value pair bellow
 			// When the res.render is called on '/signup' the message will
 			// get passed to the sigup.pug view -> Look for "if message".
-			// req.flash requires that you session middlware be setup properly too.
+			// req.flash requires that your session middlware be setup properly too.
 			// The value gets cleared after refreshing.
 			req.flash('message', 'Sorry, this name is already taken.');
 			res.redirect('/signup');	
@@ -53,7 +54,10 @@ router.post('/', (req, res) => {
 			res.redirect('/signup');
 		} else {
 			// Success adding user
-			res.redirect('/signup');
+			req.flash(
+				'message', 
+				'You have successfully created your account, please login');
+			res.redirect('/login');
 		}
 	}
 });

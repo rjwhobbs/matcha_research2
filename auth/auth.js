@@ -7,7 +7,8 @@ module.exports = router;
 
 router.get('/login', function(req, res) {
 	// The code in this if block is used for automatic signin in dev mode
-	// choose npm run dev or npm run pro. See package.json script for details
+	// run 'npm run dev' or 'npm run pro'. See package.json script for details
+	// on how the env var is setup up.
 	if (req.app.get('env') === 'developement') {
 		let user = users[0];
 		if (req.query.user) {
@@ -20,7 +21,11 @@ router.get('/login', function(req, res) {
 		return ;
 	}
 	// 'error' is the key for the value of failureFlash from the post below
+	// For more on flash() please refer to 'signup.js' comments
 	let message = req.flash('error');
+	if (message.length === 0) {
+		message = req.flash('message');
+	}
 	res.render('login', {message: message[0]});
 });
 
