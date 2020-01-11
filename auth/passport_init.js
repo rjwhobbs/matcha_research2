@@ -6,6 +6,7 @@ const bcrypt		= require('bcrypt');
 let	sql				= require('../sql/statements');
 
 passport.use(new localStrategy(function(username, password, done) {
+	console.log("Auth ran");
 	conn.query(sql.selUser, [username], (err, results) => {
 		if (err) {throw err}
 		let user = results[0];
@@ -16,6 +17,7 @@ passport.use(new localStrategy(function(username, password, done) {
 		bcrypt.compare(password, user.password, (err, res) => {
 			if (err) {throw err}
 			// Null = no error, false = auth failed, no user
+			// NB Call return; after auth failure
 			if (res) {
 				done(null, user);
 			} else {
