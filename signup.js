@@ -62,6 +62,7 @@ router.post('/', (req, res) => {
 		if (err) {throw err}
 		if (!result.affectedRows) {
 			res.redirect('/signup');
+			return;
 		} else {
 			// Success adding user
 			req.flash(
