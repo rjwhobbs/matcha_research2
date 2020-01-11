@@ -28,21 +28,22 @@ router.get('/', (req, res) => {
 router.post('/', (req, res) => {
 	let username = req.body.username;
 	let password = req.body.password;
-	conn.query(sql.selUserByUname, [username], checkNameExits);
+
+	if (!valid.uNameCheck(username)) {
+		req.flash(
+			'message',
+			'Username can only be English letters (with or without digits) ' +
+			'and not less than three letters long.'
+		);
+		res.redirect('/signup');
+		return;
+	}
+	conn.query(sql.selUserByUname, [username], checkNameExist);
 	// Execution of callback logic
 	// Function hoisting in JS makes this possible
-	function checkNameExits(err, result) {
+	function checkNameExist(err, result) {
 		if (err) {throw err}
 		if (!result.length) {
-			if (!valid.uNameCheck(username)) {
-				req.flash(
-					'message',
-					'Username can only be English letters (with or without digits) ' +
-					'and not less than three letters long.'
-				);
-				res.redirect('/signup');
-				return;
-			}
 			bcrypt.hash(password, 10, hashPasswd);
 		} else {
 			// req.flash creates the key value pair bellow
