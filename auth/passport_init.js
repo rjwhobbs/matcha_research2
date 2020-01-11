@@ -7,7 +7,7 @@ let	sql				= require('../sql/statements');
 
 passport.use(new localStrategy(function(username, password, done) {
 	console.log("Auth ran");
-	conn.query(sql.selUser, [username], (err, results) => {
+	conn.query(sql.selUserByUname, [username], (err, results) => {
 		if (err) {throw err}
 		let user = results[0];
 		if (!user) {

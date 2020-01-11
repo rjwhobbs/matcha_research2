@@ -19,34 +19,39 @@ router.use((req, res, next) => {
 });
 
 router.get('/', (req, res) => {
-	res.render('signup');
+	let message = req.flash('message');
+	res.render('signup', {message: message});
 });
 
 router.post('/', (req, res) => {
 	let username = req.body.username;
 	let password = req.body.password;
 	conn.query(sql.selUserByUname, [username], checkNameExits);
-	//Execution of callback logic
+	// Execution of callback logic
+	// Function hoisting in JS makes this possible
 	function checkNameExits(err, result) {
 		if (err) {throw err}
 		if (!result.length) {
 			bcrypt.hash(password, 10, hashPasswd);
 		} else {
+			req.flash('message', 'Sorry, this name is already taken.');
+			// req.flash('message', 'Sorry, this name is already taken.');
+			// Send user exits error here
 			res.redirect('/signup');	
 		}
-	}
-
+	} 
 	function hashPasswd(err, hash) {
 		if (err) {throw err}
 		conn.query(sql.insUser, [username, hash] ,insertNewUser);
 	}
-
 	function insertNewUser(err, result, feilds) {
 		if (err) {throw err}
-		console.log(result.affectedRows);
-		res.redirect('/signup');
-		return;
+		if (!result.affectedRows) {
+			res.redirect('/signup');
+		} else {
+			// Success adding user
+			res.redirect('/signup');
+		}
 	}
-	// res.redirect('/signup');
 });
 
