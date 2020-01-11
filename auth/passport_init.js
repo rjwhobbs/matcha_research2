@@ -9,12 +9,18 @@ passport.use(new localStrategy(function(username, password, done) {
 	conn.query(sql.selUser, [username], (err, results) => {
 		if (err) {throw err}
 		let user = results[0];
+		if (!user) {
+			done(null, false);
+			return;
+		}
 		bcrypt.compare(password, user.password, (err, res) => {
 			if (err) {throw err}
+			// Null = no error, false = auth failed, no user
 			if (res) {
 				done(null, user);
 			} else {
 				done(null, false);
+				return;
 			}
 		});
 	});

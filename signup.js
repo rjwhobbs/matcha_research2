@@ -18,3 +18,8 @@ router.use((req, res, next) => {
 router.get('/', (req, res) => {
 	res.render('signup');
 });
+
+router.post('/', (req, res) => {
+	console.log(req.body);
+	res.redirect('/signup');
+});
