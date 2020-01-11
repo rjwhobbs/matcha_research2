@@ -31,6 +31,7 @@ passport.serializeUser(function(user, done) {
 passport.deserializeUser(function(user_id, done) {
 	conn.query(sql.selUserById, [user_id], (err, results) => {
 		if (err) {throw err}
+		// Need to remove hashed password from object.
 		let user = results[0];
 		done(null, user);
 	});
