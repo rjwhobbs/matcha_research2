@@ -2,9 +2,10 @@ const uuid 		= require('uuid/v4');
 const _			= require('lodash');
 const express 	= require('express');
 const conn		= require('./connection/conn');
-const sql		= require('./sql/statements');
+const sql		= require('./model/sqL_statements');
 const bcrypt 	= require('bcrypt');
 let	valid		= require('./helpers/signup_helpers');
+let	notice		= require('./model/messages');
 
 let router = express.Router();
 module.exports = router;
@@ -30,11 +31,7 @@ router.post('/', (req, res) => {
 	let password = req.body.password;
 
 	if (!valid.uNameCheck(username)) {
-		req.flash(
-			'message',
-			'Username can only be English letters (with or without digits) ' +
-			'and not less than three letters long.'
-		);
+		req.flash('message', notice.errInvalidName);
 		res.redirect('/signup');
 		return;
 	}
@@ -51,7 +48,7 @@ router.post('/', (req, res) => {
 			// get passed to the sigup.pug view -> Look for "if message".
 			// req.flash requires that your session middlware be setup properly too.
 			// The value gets cleared after refreshing.
-			req.flash('message', 'Sorry, this name is already taken.');
+			req.flash('message', notice.errNameExists);
 			res.redirect('/signup');	
 		}
 	}
@@ -65,10 +62,7 @@ router.post('/', (req, res) => {
 			res.redirect('/signup');
 			return;
 		} else {
-			// Success adding user
-			req.flash(
-				'message', 
-				'You have successfully created your account, please login');
+			req.flash('message', notice.successCreate);
 			res.redirect('/login');
 		}
 	}

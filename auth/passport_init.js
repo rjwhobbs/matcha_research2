@@ -3,7 +3,7 @@ const localStrategy = require('passport-local').Strategy;
 const conn 			= require('../connection/conn');
 const _ 			= require('lodash');
 const bcrypt		= require('bcrypt');
-let	sql				= require('../sql/statements');
+let	sql				= require('../model/sqL_statements');
 
 passport.use(new localStrategy(function(username, password, done) {
 	console.log("Auth ran");
