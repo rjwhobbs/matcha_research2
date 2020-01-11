@@ -34,9 +34,12 @@ router.post('/', (req, res) => {
 		if (!result.length) {
 			bcrypt.hash(password, 10, hashPasswd);
 		} else {
+			// req.flash creates the key value pair bellow
+			// When the res.render is called on '/signup' the message will
+			// get passed to the sigup.pug view -> Look for "if message".
+			// req.flash requires that you session middlware be setup properly too.
+			// The value gets cleared after refreshing.
 			req.flash('message', 'Sorry, this name is already taken.');
-			// req.flash('message', 'Sorry, this name is already taken.');
-			// Send user exits error here
 			res.redirect('/signup');	
 		}
 	} 
