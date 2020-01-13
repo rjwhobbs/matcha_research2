@@ -2,7 +2,7 @@ const fs 			= require('fs');
 const mysql 		= require('mysql');
 const configUsers 	= require('./config_credentials');
 
-dbc = mysql.createConnection(configUsers.roger_mbp);
+dbc = mysql.createConnection(configUsers.roger_imac1);
 
 // So this splits up the data from setup.sql by a ';' char
 // The sql statements then get passed one by one to a query to create the db

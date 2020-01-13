@@ -17,7 +17,7 @@ let connCredentials	= require('./credentials');
 // 	socketPath: '/goinfre/rhobbs/Desktop/server/mysql/tmp/mysql.sock'
 // };
 
-let conn = mysql.createConnection(connCredentials.roger_mbp);
+let conn = mysql.createConnection(connCredentials.roger_imac1);
 
 conn.connect(function(err) {
 	if (err) {throw err}
